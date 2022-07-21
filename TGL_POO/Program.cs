@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using TGL_POO.Entities;
 using TGL_POO.Model;
 
 namespace TGL_POO
@@ -8,7 +10,57 @@ namespace TGL_POO
     {
         static void Main(string[] args)
         {
-            Polymorphism();
+
+            
+            //ExEmployee();
+
+
+            //Polymorphism();
+
+
+        }
+
+        public static void ExEmployee()
+        {
+            List<Employee> list = new List<Employee>();
+
+            Console.WriteLine("Enter the number of employees.");
+            int n = int.Parse(Console.ReadLine());
+
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Employees #{i} data:");
+                Console.WriteLine("Outsoruced (y/n)?");
+                char Outso = char.Parse(Console.ReadLine());
+                Console.WriteLine("Name: ");
+                string name = Console.ReadLine();
+                Console.WriteLine("Hours: ");
+                int hours = int.Parse(Console.ReadLine());
+                Console.WriteLine("Value per hour:");
+                double Valueperhour = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+
+                if (Outso == 'y')
+                {
+                    Console.WriteLine("Aditional charge");
+                    double AdditionalCharge = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+
+                    list.Add(new OutSourcedEmployee(name, hours, Valueperhour, AdditionalCharge));
+                }
+                else
+                {
+                    list.Add(new Employee(name, hours, Valueperhour));
+                }
+            }
+
+            Console.WriteLine("---------------------------");
+            Console.WriteLine("Payments");
+            Console.WriteLine("---------------------------");
+
+            foreach(Employee emp in list)
+            {
+                Console.WriteLine(emp.Name + " - $" + emp.Payment().ToString("F2", CultureInfo.InvariantCulture));
+                
+            }
         }
 
 
